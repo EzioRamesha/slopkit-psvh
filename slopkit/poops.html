@@ -82,7 +82,7 @@
     <span class="stage-chip" data-chip="rop">ROP</span>
     <span class="stage-chip" data-chip="kernel">Kernel</span>
     <span class="stage-chip" data-chip="elfldr">elfldr</span>
-    <span class="stage-chip" data-chip="iris">Iris</span>
+    <span class="stage-chip" data-chip="iris">PSVH</span>
     <span class="stage-chip" data-chip="kstuff">kstuff</span>
     <span class="stage-chip" data-chip="pldmgr">pldmgr</span>
   </div>
@@ -105,7 +105,7 @@
   <div id="payloadMenu">
     <div class="menuTitle">PAYLOADS</div>
     <a class="payloadTile primary" href="#" data-name="iris-installer.elf" data-key="iris"
-       data-state="default"><span>Iris Installer</span><span class="meta">auto first</span></a>
+       data-state="default"><span>PSVietHoa Installer</span><span class="meta">auto first</span></a>
     <a class="payloadTile" href="#" data-name="kstuff-lite.elf" data-key="kstuff"
        data-remote="https://github.com/EchoStretch/kstuff-lite/releases/latest/download/kstuff.elf"
        data-state="default"><span>Kstuff Lite</span><span class="meta">manual</span></a>
@@ -124,7 +124,7 @@
     <a class="payloadTile" href="#" data-name="websrv-ps5.elf" data-key="web"
        data-state="default"><span>Web</span><span class="meta">aux</span></a>
   </div>
-  <button type="button" id="installIris">INSTALL IRIS</button>
+  <button type="button" id="installIris">INSTALL PSVIETHOA</button>
   <button type="button" id="retryInject">RETRY IRIS INSTALL</button>
   <button type="button" id="forceAfterReboot">I REBOOTED — START JAILBREAK</button>
   <div id="nav"></div>
@@ -136,7 +136,7 @@
     · lite host &amp; tooling: <strong>Ramesh</strong>
     · <a href="https://github.com/EchoStretch/kstuff-lite" target="_blank" rel="noopener">EchoStretch/kstuff-lite</a>
     · <a href="https://github.com/itsPLK/ps5-payload-manager" target="_blank" rel="noopener">itsPLK/ps5-payload-manager</a>
-    · Iris install: <a href="https://github.com/EzioRamesha/ramesh-webkit-autoloader" target="_blank" rel="noopener">ramesh-webkit-autoloader</a>
+    · Installer: <a href="https://github.com/thanhsondev/psviethoa-webkit-autoloader" target="_blank" rel="noopener">PSVietHoa (thanhsondev)</a>
       / <a href="https://github.com/itsPLK/ps5-webkit-autoloader" target="_blank" rel="noopener">itsPLK installer</a>
     · <a href="https://github.com/sleirsgoevy" target="_blank" rel="noopener">sleirsgoevy</a>
   </footer>
@@ -559,7 +559,7 @@ function showPayloadMenu() {
     if (installBtn) {
         installBtn.className = "on";
         installBtn.disabled = false;
-        installBtn.textContent = "INSTALL IRIS";
+        installBtn.textContent = "INSTALL PSVIETHOA";
     }
     const tiles = payloadMenuEl.getElementsByTagName("a");
     if (tiles.length) try { tiles[0].focus(); } catch (e) { }
@@ -930,7 +930,7 @@ async function sendPayloadInPlace(name, tile, opts) {
 }
 
 let autoInjectStarted = false;
-/** Lab first task: install Iris homescreen app via WebKit Autoloader installer ELF. */
+/** PSVH host first task: install PSVietHoa AutoLoader homescreen app via installer ELF. */
 const IRIS_INSTALLER_NAME = "iris-installer.elf";
 /**
  * Auto chain (lab): Iris installer first. kstuff/pldmgr stay manual tiles.
@@ -956,7 +956,7 @@ async function autoInjectPayloads() {
     if (ok) {
         setReactorState("online");
         setStageChip("iris", "done");
-        stageEl.textContent = "IRIS INSTALLER SENT — follow on-console prompts, then reboot once";
+        stageEl.textContent = "PSVIETHOA INSTALLER SENT — follow on-console prompts, then reboot once";
         stageEl.className = "ok";
         syncStageChips("iris install", "ok");
         flushMark("IRIS-AUTO-OK", "name=" + IRIS_INSTALLER_NAME);
@@ -969,7 +969,7 @@ async function autoInjectPayloads() {
     if (payloadSenderBlocked) {
         setReactorState("bad");
         setStageChip("iris", "fail");
-        stageEl.textContent = "IRIS INSTALL BLOCKED — REBOOT REQUIRED";
+        stageEl.textContent = "PSVIETHOA INSTALL BLOCKED — REBOOT REQUIRED";
         stageEl.className = "bad";
         if (retry) {
             retry.className = "";
@@ -981,7 +981,7 @@ async function autoInjectPayloads() {
     }
     setReactorState("inject-fail");
     setStageChip("iris", "fail");
-    stageEl.textContent = "IRIS INSTALL FAILED — RETRY OR REBOOT";
+    stageEl.textContent = "PSVIETHOA INSTALL FAILED — RETRY OR REBOOT";
     stageEl.className = "bad";
     showRetry("RETRY IRIS INSTALL");
     flushMark("IRIS-AUTO-FAIL", "name=" + IRIS_INSTALLER_NAME);
@@ -1010,7 +1010,7 @@ async function autoInjectPayloads() {
     if (installBtn) {
         installBtn.onclick = function () {
             if (payloadSenderBlocked) {
-                stageEl.textContent = "IRIS INSTALL BLOCKED — REBOOT REQUIRED";
+                stageEl.textContent = "PSVIETHOA INSTALL BLOCKED — REBOOT REQUIRED";
                 stageEl.className = "bad";
                 flushMark("IRIS-MANUAL-BLOCKED", clean(payloadSenderBlocked));
                 return;
